@@ -56,6 +56,11 @@ export const paymentSchema = z.object({
     .max(4),
 
   amount: z.number().positive(),
+  currency: z.enum([
+    "INR",
+    "USD",
+    "EUR",
+  ]),
 });
 
 export type PaymentFormValues  =
