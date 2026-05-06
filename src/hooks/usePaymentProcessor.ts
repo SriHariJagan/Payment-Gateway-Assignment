@@ -6,14 +6,20 @@ import { PaymentFormValues } from "@/utils/validators";
 
 import { usePaymentStore } from "@/store/paymentStore";
 
+import type {
+  Transaction,
+  CardType,
+} from "@/types/payment";
+
 interface ProcessPaymentParams {
   data: PaymentFormValues;
 
-  cardType: string;
+  cardType: CardType;
 }
 
 export function usePaymentProcessor() {
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] =
+    useState("");
 
   const {
     setStatus,
@@ -23,7 +29,10 @@ export function usePaymentProcessor() {
     resetAttempts,
   } = usePaymentStore();
 
-  const processPayment = async ({ data, cardType }: ProcessPaymentParams) => {
+  const processPayment = async ({
+    data,
+    cardType,
+  }: ProcessPaymentParams) => {
     try {
       setSuccessMessage("");
 
@@ -31,16 +40,21 @@ export function usePaymentProcessor() {
 
       generateTransactionId();
 
-      await new Promise((resolve) => setTimeout(resolve, 2500));
+      await new Promise((resolve) =>
+        setTimeout(resolve, 2500),
+      );
 
-      const isSuccess = Math.random() > 0.2;
+      const isSuccess =
+        Math.random() > 0.2;
 
-      const transaction = {
+      const transaction: Transaction = {
         id: crypto.randomUUID(),
 
-        transactionId: crypto.randomUUID(),
+        transactionId:
+          crypto.randomUUID(),
 
-        cardHolder: data.cardHolder,
+        cardHolder:
+          data.cardHolder,
 
         amount: data.amount,
 
@@ -48,9 +62,18 @@ export function usePaymentProcessor() {
 
         cardType,
 
-        status: isSuccess ? "success" : "failed",
+        status: isSuccess
+          ? "success"
+          : "failed",
 
-        createdAt: new Date().toISOString(),
+        createdAt:
+          new Date().toISOString(),
+
+        attempts: 1,
+
+        failureReason: isSuccess
+          ? undefined
+          : "Payment declined",
       };
 
       addTransaction(transaction);
@@ -60,7 +83,9 @@ export function usePaymentProcessor() {
 
         resetAttempts();
 
-        setSuccessMessage("Payment completed successfully.");
+        setSuccessMessage(
+          "Payment completed successfully.",
+        );
 
         setTimeout(() => {
           setStatus("idle");
