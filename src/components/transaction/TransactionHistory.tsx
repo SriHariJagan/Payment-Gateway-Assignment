@@ -21,7 +21,7 @@ export default function TransactionHistory() {
     <div className="space-y-4">
       {transactions.map((transaction) => (
         <div
-          key={transaction.id}
+          key={transaction.transactionId}
           className="flex items-center justify-between rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md"
         >
           {/* LEFT */}
@@ -50,7 +50,7 @@ export default function TransactionHistory() {
               </h3>
 
               <p className="mt-1 text-sm text-slate-500">
-                {new Date(transaction.createdAt).toLocaleString()}
+                {new Date(transaction.timestamp).toLocaleString()}
               </p>
             </div>
           </div>

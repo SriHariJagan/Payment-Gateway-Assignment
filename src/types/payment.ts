@@ -23,6 +23,7 @@ export interface PaymentPayload {
 
 export interface Transaction {
   transactionId: string;
+  cardHolder: string;
   amount: number;
   currency: string;
   status: PaymentStatus;
