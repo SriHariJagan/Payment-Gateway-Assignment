@@ -50,7 +50,7 @@ export default function TransactionHistory() {
               </h3>
 
               <p className="mt-1 text-sm text-slate-500">
-                {new Date(transaction.timestamp).toLocaleString()}
+                {new Date(transaction.createdAt).toLocaleString()}
               </p>
             </div>
           </div>
